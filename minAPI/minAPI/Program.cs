@@ -1,9 +1,25 @@
+using DataAccess;
+using DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+configurationBuilder.SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", false, true)
+    .Build();
+
+var configuration = configurationBuilder.Build();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<ApiContext>(options =>
+{
+    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
@@ -34,6 +50,47 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.MapGet("/users", () =>
+{
+    var list = new List<User>(1000);
+    for (int index = 1; index < 1001; index++)
+    {
+        list.Add(new User
+        {
+            Id = index,
+            Age = 25,
+            FirstName = "First_Name" + index,
+            LastName = "Last_Name" + index,
+            Email = "Email" + index,
+            Framework = "minimal"
+        }
+        );
+    }
+
+    return list;
+}).WithName("User");
+
+app.MapGet("/usersefcore", () =>
+{
+    var list = new List<User>(1000);
+    for (int index = 1; index < 1001; index++)
+    {
+        list.Add(new User
+            {
+                Id = index,
+                Age = 25,
+                FirstName = "First_Name" + index,
+                LastName = "Last_Name" + index,
+                Email = "Email" + index,
+                Framework = "minimal"
+            }
+        );
+    }
+
+    return list;
+}).WithName("User");
+
 
 app.Run();
 
