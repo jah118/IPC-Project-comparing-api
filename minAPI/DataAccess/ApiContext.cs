@@ -10,11 +10,11 @@ namespace DataAccess
         {
         }
 
-        public ApiContext(DbContextOptions options)
+        public ApiContext(DbContextOptions<ApiContext> options) : base(options)
         {
         }
 
-        private const string connectionString = "Server=JONASXPS\\SQLEXPRESS; Initial Catalog=EFCore; Integrated Security=True";
+        private const string connectionString = "Server=MAIN-DESKTOP\\SQLEXPRESS; Initial Catalog=EFCore; Integrated Security=True";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,7 +25,6 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             var ids = 1;
             var testUsers = new Faker<User>()
                 .RuleFor(m => m.Gender, f => f.PickRandom<Gender>())
@@ -41,11 +40,10 @@ namespace DataAccess
                     Console.WriteLine("User Created! Id={0}", u.Id);
                 });
 
-
-            // generate 10000 items
+            // generate 1000 items
             modelBuilder
                 .Entity<User>()
-                .HasData(testUsers.GenerateBetween(10000, 10000));
+                .HasData(testUsers.GenerateBetween(1000, 1000));
         }
     }
 }

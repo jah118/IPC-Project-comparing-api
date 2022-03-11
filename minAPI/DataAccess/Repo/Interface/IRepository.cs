@@ -1,13 +1,64 @@
-﻿namespace DataAccess.Repositories.Interfaces
+﻿namespace DataAccess.Repo.Interface
 {
+    using System.Diagnostics.CodeAnalysis;
+
+    using DataAccess.Model;
+
+    /// <summary>
+    /// The Repository interface.
+    /// </summary>
+    /// <typeparam name="TEntity">
+    /// </typeparam>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1622:GenericTypeParameterDocumentationMustHaveText", Justification = "Reviewed. Suppression is OK here.")]
     public interface IRepository<TEntity>
     {
-        IEnumerable<TEntity> GetAll();
+        /// <summary>
+        /// The get all.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
+        Task<List<User>> GetAll();
 
-        TEntity? GetById(object id);
+        /// <summary>
+        /// The get by id.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="TEntity?"/>.
+        /// </returns>
+        TEntity? GetById(int id);
 
+        /// <summary>
+        /// The create.
+        /// </summary>
+        /// <param name="obj">
+        /// The obj.
+        /// </param>
+        /// <returns>
+        /// The <see cref="TEntity?"/>.
+        /// </returns>
         TEntity? Create(TEntity obj);
 
+        /// <summary>
+        /// The update.
+        /// </summary>
+        /// <param name="obj">
+        /// The obj.
+        /// </param>
+        /// <returns>
+        /// The <see cref="TEntity"/>.
+        /// </returns>
         TEntity Update(TEntity obj);
+
+        /// <summary>
+        /// The delete.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        void Delete(int id);
     }
 }

@@ -1,31 +1,46 @@
-﻿using DataAccess.Model;
-using DataAccess.Repositories.Interfaces;
+﻿using DataAccess;
+using DataAccess.Model;
+using DataAccess.Repo.Interface;
+using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess.Repo
+public class UserRepo : IRepository<User>
 {
-    internal class UserRepo : IRepository<User>
+    private readonly ApiContext context;
+
+    public UserRepo(ApiContext context)
     {
-        public IEnumerable<User> GetAll()
+        this.context = context;
+    }
+
+    public Task<List<User>> GetAll()
+    {
+        var user = this.context.Users.ToListAsync();
+        return user;
+    }
+
+    public User? GetById(int id)
+    {
+        var user = this.context.Users.AsNoTracking().SingleOrDefault(p => p.Id == id);
+        return user;
+    }
+
+    public User? Create(User obj)
+    {
+        throw new NotImplementedException();
+    }
+
+    public User Update(User obj)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Delete(int id)
+    {
+        var userToDelete = this.context.Users.Find(id);
+        if (userToDelete is not null)
         {
-            using (var db = new ApiContext())
-
-
-                throw new NotImplementedException();
-        }
-
-        public User? GetById(object id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User? Create(User obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Update(User obj)
-        {
-            throw new NotImplementedException();
+            this.context.Users.Remove(userToDelete);
+            this.context.SaveChanges();
         }
     }
 }

@@ -1,5 +1,7 @@
 using DataAccess;
 using DataAccess.Model;
+using DataAccess.Repo.Interface;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,8 @@ builder.Services.AddDbContext<ApiContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddTransient<IRepository<User>, UserRepo>();
 
 var app = builder.Build();
 
@@ -71,26 +75,8 @@ app.MapGet("/users", () =>
     return list;
 }).WithName("User");
 
-app.MapGet("/usersefcore", () =>
-{
-    var list = new List<User>(1000);
-    for (int index = 1; index < 1001; index++)
-    {
-        list.Add(new User
-            {
-                Id = index,
-                Age = 25,
-                FirstName = "First_Name" + index,
-                LastName = "Last_Name" + index,
-                Email = "Email" + index,
-                Framework = "minimal"
-            }
-        );
-    }
-
-    return list;
-}).WithName("User");
-
+app.MapGet("/usersefcore", async (IRepository<User> userRepo) => await userRepo.GetAll()).WithName("UserEfCore");
+app.MapGet("/usersefcoreGetById", (int id, IRepository<User> userRepo) => userRepo.GetById(id));
 
 app.Run();
 
