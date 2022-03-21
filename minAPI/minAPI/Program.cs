@@ -1,3 +1,4 @@
+using System.Text;
 using DataAccess;
 using DataAccess.Model;
 using DataAccess.Repo.Interface;
@@ -35,6 +36,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+// app.Urls.Add("http://0.0.0.0:3000");
+
+const string helloWorldPayload = "Hello, World!";
+
 
 var summaries = new[]
 {
@@ -77,6 +82,13 @@ app.MapGet("/users", () =>
 
 app.MapGet("/usersefcore", async (IRepository<User> userRepo) => await userRepo.GetAll()).WithName("UserEfCore");
 app.MapGet("/usersefcoreGetById", (int id, IRepository<User> userRepo) => userRepo.GetById(id));
+app.MapGet("/hello", () => "Hello World!");
+app.MapGet("/plain", () =>
+    {
+    Results.StatusCode(200);
+    Results.Content("text/plain");
+    return Results.Text(helloWorldPayload);
+    });
 
 app.Run();
 
