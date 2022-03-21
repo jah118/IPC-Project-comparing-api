@@ -10,7 +10,6 @@ public class UserRepo : IRepository<User>
     public UserRepo(ApiContext context)
     {
         this.context = context;
-        context.Database.EnsureCreated();
     }
 
     public Task<List<User>> GetAll()

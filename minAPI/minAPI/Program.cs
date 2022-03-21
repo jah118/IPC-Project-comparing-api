@@ -27,6 +27,8 @@ builder.Services.AddDbContext<ApiContext>(options =>
 });
 
 builder.Services.AddTransient<IRepository<User>, UserRepo>();
+var service = builder.Services.BuildServiceProvider().GetService<ApiContext>();
+service.Database.EnsureCreated();
 
 var app = builder.Build();
 

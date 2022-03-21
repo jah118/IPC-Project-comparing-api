@@ -21,14 +21,15 @@ services:
       dockerfile: minAPI/Dockerfile
     ports:
       - "5000:80"
+      - "5001:443"
       #- "5001:5001"
     volumes:
       #Folders which must be added to the file watcher must be listed below:
       - ./IPC-Project-comparing-api:/IPC-Project-comparing-api\minAPI\minAPI\
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: 1
-      ASPNETCORE_URLS: "http://+:80"
-      #ASPNETCORE_URLS: "https://+;http://+"
+      #ASPNETCORE_URLS: "http://+:80"
+      ASPNETCORE_URLS: "https://+443;http://+80"
     networks:
       - net03
 

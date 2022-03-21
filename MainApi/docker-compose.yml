@@ -5,7 +5,7 @@ services:
         container_name: mainpidb
         image: "mcr.microsoft.com/mssql/server:latest-ubuntu"
         ports:
-          - "1433:1433"
+          - "2433:1433"
         volumes:
           - mssql-dt-volume:/var/lib/mssqlql/data
         environment:
@@ -21,13 +21,14 @@ services:
           dockerfile: MainApi/Dockerfile
         ports:
           - "8000:80"
+          - "8001:443"
           #- "5001:5001"
         volumes:
           - ./IPC-Project-comparing-api:/IPC-Project-comparing-api\MainApi\
         environment:
           DOTNET_USE_POLLING_FILE_WATCHER: 1
-          ASPNETCORE_URLS: "http://+:80"
-          #ASPNETCORE_URLS: "https://+;http://+"
+          #ASPNETCORE_URLS: "http://+:80"
+          ASPNETCORE_URLS: "https://+:443;http://+:80"
         networks:
           - net01
         depends_on:
