@@ -21,7 +21,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApiContext>(options =>
 {
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer("Server=miniapidb; Initial Catalog=EFCore; User Id=SA;Password=VerySecretPass1234; Integrated Security=False; MultipleActiveResultSets=True;");
+
+    //options.UseSqlServer("Server=JONASXPS\\SQLEXPRESS; Initial Catalog=EFCore; Integrated Security=True");
 });
 
 builder.Services.AddTransient<IRepository<User>, UserRepo>();
@@ -36,29 +38,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-// app.Urls.Add("http://0.0.0.0:3000");
 
 const string helloWorldPayload = "Hello, World!";
 
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-       new WeatherForecast
-       (
-           DateTime.Now.AddDays(index),
-           Random.Shared.Next(-20, 55),
-           summaries[Random.Shared.Next(summaries.Length)]
-       ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
 
 app.MapGet("/users", () =>
 {
@@ -80,19 +62,14 @@ app.MapGet("/users", () =>
     return list;
 }).WithName("User");
 
-app.MapGet("/usersefcore", async (IRepository<User> userRepo) => await userRepo.GetAll()).WithName("UserEfCore");
-app.MapGet("/usersefcoreGetById", (int id, IRepository<User> userRepo) => userRepo.GetById(id));
+app.MapGet("/getEfCore", async (IRepository<User> userRepo) => await userRepo.GetAll()).WithName("UserEfCore");
+app.MapGet("/getEfCoreById", (int id, IRepository<User> userRepo) => userRepo.GetById(id));
 app.MapGet("/hello", () => "Hello World!");
 app.MapGet("/plain", () =>
     {
-    Results.StatusCode(200);
-    Results.Content("text/plain");
-    return Results.Text(helloWorldPayload);
+        Results.StatusCode(200);
+        Results.Content("text/plain");
+        return Results.Text(helloWorldPayload);
     });
 
 app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

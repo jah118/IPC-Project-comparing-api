@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Model
+﻿namespace MainApi.DataAccess.Model
 {
     public class User
     {

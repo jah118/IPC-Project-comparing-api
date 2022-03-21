@@ -1,8 +1,8 @@
 ﻿using Bogus;
-using DataAccess.Model;
+using MainApi.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess
+namespace MainApi.DataAccess
 {
     public class ApiContext : DbContext
     {
@@ -14,12 +14,12 @@ namespace DataAccess
         {
         }
 
-        //private const string connectionString =
-        //"Server=127.0.0.1,1443; Initial Catalog=EFCore; User Id=SA;Password=Passw0rd2019; Integrated Security=False; MultipleActiveResultSets=True;";
+        private const string connectionString =
+        "Server=127.0.0.1,1443; Initial Catalog=EFCore; User Id=SA;Password=VerySecretPass1234; Integrated Security=False; MultipleActiveResultSets=True;";
         //"Server=10.10.1.62,1433; Database=EFCore; User Id=sa;Password=12341234;MultipleActiveResultSets=true";
         //"Server=sqlserver;Database=EFCore;User Id=sa;Password=BigPassw0rd";
 
-        private const string connectionString = "Server=JONASXPS\\SQLEXPRESS; Initial Catalog=EFCore; Integrated Security=True";
+        //private const string connectionString = "Server=JonasXPS\\SQLEXPRESS; Initial Catalog=EFCore; Integrated Security=True";
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

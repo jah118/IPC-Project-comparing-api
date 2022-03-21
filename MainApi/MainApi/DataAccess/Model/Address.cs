@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DataAccess.Model
+﻿namespace MainApi.DataAccess.Model
 {
     public class Address
     {
         public Address()
         {
-            
+
 
         }
         public Address(int id, string addressDetail, User user, int userId)

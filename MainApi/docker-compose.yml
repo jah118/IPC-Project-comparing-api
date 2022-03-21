@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  mainpidb:
+        container_name: mainpidb
+        image: "mcr.microsoft.com/mssql/server:latest-ubuntu"
+        ports:
+          - "1433:1433"
+        volumes:
+          - mssql-dt-volume:/var/lib/mssqlql/data
+        environment:
+          SA_PASSWORD: "VerySecretPass1234"
+          ACCEPT_EULA: "Y"
+        networks:
+          - net01
+  mainapi:
+        container_name: mainapi
+        image: ${DOCKER_REGISTRY-}mainapi
+        build:
+          context: .
+          dockerfile: MainApi/Dockerfile
+        ports:
+          - "8000:80"
+          #- "5001:5001"
+        volumes:
+          - ./IPC-Project-comparing-api:/IPC-Project-comparing-api\MainApi\
+        environment:
+          DOTNET_USE_POLLING_FILE_WATCHER: 1
+          ASPNETCORE_URLS: "http://+:80"
+          #ASPNETCORE_URLS: "https://+;http://+"
+        networks:
+          - net01
+        depends_on:
+        - mainpidb
+
+networks:
+  net01:
+
+volumes:
+  mssql-dt-volume:
