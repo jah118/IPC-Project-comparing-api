@@ -17,12 +17,20 @@ docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<YourStrong@Passw0rd>"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "VerySecretPass1234"
 	SELECT Name from sys.Databases
 	GO
-   
+
+dotnet dev-certs https -ep jonas\.aspnet\https\aspnetapp.pfx -p "VerySecretPass1234"
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p "VerySecretPass1234"
+
    
    
 docker compose build 
 docker compose up 
 docker compose down
+
+
+dotnet dev-certs https --clean
+dotnet dev-certs https --trust
+
 
 
 

@@ -1,8 +1,8 @@
 ﻿using Bogus;
-using MainApi.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
+using minAPI.DataAccess.Model;
 
-namespace MainApi.DataAccess
+namespace minAPI.DataAccess
 {
     public class ApiContext : DbContext
     {
@@ -20,11 +20,11 @@ namespace MainApi.DataAccess
         //"Server=sqlserver;Database=EFCore;User Id=sa;Password=BigPassw0rd";
 
         //private const string connectionString = "Server=JonasXPS\\SQLEXPRESS; Initial Catalog=EFCore; Integrated Security=True";
-        private const string connectionString = "Server=mainpidb; Initial Catalog=EFCore; User Id=SA;Password=VerySecretPass1234; Integrated Security=False;";
+        private const string connectionString = "Server=miniapidb; Initial Catalog=EFCore; User Id=SA;Password=VerySecretPass1234; Integrated Security=False;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString); 
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
         public DbSet<User>? Users { get; set; }

@@ -22,13 +22,11 @@ services:
         ports:
           - "8000:80"
           - "8001:443"
-          #- "5001:5001"
         volumes:
           - ./IPC-Project-comparing-api:/IPC-Project-comparing-api\MainApi\
         environment:
           DOTNET_USE_POLLING_FILE_WATCHER: 1
-          #ASPNETCORE_URLS: "http://+:80"
-          ASPNETCORE_URLS: "https://+:443;http://+:80"
+          ASPNETCORE_URLS: "https://+;http://+"
         networks:
           - net01
         depends_on:

@@ -4,12 +4,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
-EXPOSE 1433
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["minAPI/minAPI.csproj", "minAPI/"]
-COPY ["DataAccess/DataAccess.csproj", "DataAccess/"]
 RUN dotnet restore "minAPI/minAPI.csproj"
 COPY . .
 WORKDIR "/src/minAPI"

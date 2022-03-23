@@ -1,9 +1,9 @@
+using System.Diagnostics;
 using System.Text;
-using DataAccess;
-using DataAccess.Model;
-using DataAccess.Repo.Interface;
-
 using Microsoft.EntityFrameworkCore;
+using minAPI.DataAccess;
+using minAPI.DataAccess.Model;
+using minAPI.DataAccess.Repo.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,8 +27,11 @@ builder.Services.AddDbContext<ApiContext>(options =>
 });
 
 builder.Services.AddTransient<IRepository<User>, UserRepo>();
-var service = builder.Services.BuildServiceProvider().GetService<ApiContext>();
-service.Database.EnsureCreated();
+using (var service = builder.Services.BuildServiceProvider().GetService<ApiContext>())
+{
+    Debug.Assert(service != null, nameof(service) + " != null");
+    service.Database.EnsureCreated();
+}
 
 var app = builder.Build();
 
