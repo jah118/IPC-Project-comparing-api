@@ -1,6 +1,9 @@
-using DataAccess;
-using DataAccess.Model;
+using System.Diagnostics;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using minAPI.DataAccess;
+using minAPI.DataAccess.Model;
+using minAPI.DataAccess.Repo.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +21,17 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApiContext>(options =>
 {
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer("Server=miniapidb; Initial Catalog=EFCore; User Id=SA;Password=VerySecretPass1234; Integrated Security=False; MultipleActiveResultSets=True;");
+
+    //options.UseSqlServer("Server=JONASXPS\\SQLEXPRESS; Initial Catalog=EFCore; Integrated Security=True");
 });
+
+builder.Services.AddTransient<IRepository<User>, UserRepo>();
+using (var service = builder.Services.BuildServiceProvider().GetService<ApiContext>())
+{
+    Debug.Assert(service != null, nameof(service) + " != null");
+    service.Database.EnsureCreated();
+}
 
 var app = builder.Build();
 
@@ -32,24 +44,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+const string helloWorldPayload = "Hello, World!";
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-       new WeatherForecast
-       (
-           DateTime.Now.AddDays(index),
-           Random.Shared.Next(-20, 55),
-           summaries[Random.Shared.Next(summaries.Length)]
-       ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
 
 app.MapGet("/users", () =>
 {
@@ -71,30 +67,14 @@ app.MapGet("/users", () =>
     return list;
 }).WithName("User");
 
-app.MapGet("/usersefcore", () =>
-{
-    var list = new List<User>(1000);
-    for (int index = 1; index < 1001; index++)
+app.MapGet("/getEfCore", async (IRepository<User> userRepo) => await userRepo.GetAll()).WithName("UserEfCore");
+app.MapGet("/getEfCoreById", (int id, IRepository<User> userRepo) => userRepo.GetById(id));
+app.MapGet("/hello", () => "Hello World!");
+app.MapGet("/plain", () =>
     {
-        list.Add(new User
-            {
-                Id = index,
-                Age = 25,
-                FirstName = "First_Name" + index,
-                LastName = "Last_Name" + index,
-                Email = "Email" + index,
-                Framework = "minimal"
-            }
-        );
-    }
-
-    return list;
-}).WithName("User");
-
+        Results.StatusCode(200);
+        Results.Content("text/plain");
+        return Results.Text(helloWorldPayload);
+    });
 
 app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

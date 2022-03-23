@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  miniapidb:
+    container_name: miniapidb
+    image: "mcr.microsoft.com/mssql/server:latest-ubuntu"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-dt-volume:/var/lib/mssqlql/data
+    environment:
+      SA_PASSWORD: "VerySecretPass1234"
+      ACCEPT_EULA: "Y"
+    networks:
+      - net03
+  minapi:
+    container_name: minapi
+    image: ${DOCKER_REGISTRY-}minapi
+    build:
+      context: .
+      dockerfile: minAPI/Dockerfile
+    ports:
+      - "5000:80"
+      - "5001:443"
+    volumes:
+      #Folders which must be added to the file watcher must be listed below:
+      - ./IPC-Project-comparing-api:/IPC-Project-comparing-api\minAPI\minAPI\
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: 1
+      ASPNETCORE_URLS: "https://+;http://+"
+    networks:
+      - net03
+
+    depends_on:
+      - miniapidb
+
+networks:
+  net03:
+
+volumes:
+  mssql-dt-volume:

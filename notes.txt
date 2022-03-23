@@ -1,0 +1,36 @@
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Passw0rd2019" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-CU15-ubuntu-20.04
+
+
+
+docker exec -it 764e83efff95 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Passw0rd2019Passw0rd2019'
+docker exec -it 37345b836026 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P <your_password>
+docker exec -it 0ac7fcd0bf0d /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Pa$$w0rd2019'
+
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Passw0rd2019" -p 1433:1433 --name sql1 --hostname sql1 -d mcr.microsoft.com/mssql/server:2019-latest
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "<YourNewStrong@Passw0rd>"
+
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<YourStrong@Passw0rd>"
+   -p 1433:1433 --name sql1 --hostname sql1 \
+   -d mcr.microsoft.com/mssql/server:2019-latest
+   
+   
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "VerySecretPass1234"
+	SELECT Name from sys.Databases
+	GO
+
+dotnet dev-certs https -ep jonas\.aspnet\https\aspnetapp.pfx -p "VerySecretPass1234"
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p "VerySecretPass1234"
+
+   
+   
+docker compose build 
+docker compose up 
+docker compose down
+
+
+dotnet dev-certs https --clean
+dotnet dev-certs https --trust
+
+
+
+
