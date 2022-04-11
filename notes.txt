@@ -20,6 +20,7 @@ docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<YourStrong@Passw0rd>"
 
 dotnet dev-certs https -ep jonas\.aspnet\https\aspnetapp.pfx -p "VerySecretPass1234"
 dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p "VerySecretPass1234"
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p "VerySecret123"
 
    
    
