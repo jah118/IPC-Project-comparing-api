@@ -4,9 +4,8 @@
     {
         public Address()
         {
-
-
         }
+
         public Address(int id, string addressDetail, User user, int userId)
         {
             Id = id;
@@ -17,6 +16,7 @@
 
         public int Id { get; set; }
         public string AddressDetail { get; set; }
+
         //[ForeignKey("UserId")]
         public User User { get; set; }
 

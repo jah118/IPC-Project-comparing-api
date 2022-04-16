@@ -24,7 +24,7 @@ namespace MainApi.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString); 
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
         public DbSet<User>? Users { get; set; }

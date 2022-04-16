@@ -6,15 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MainApi.Controllers
 {
-
-
     //[Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IRepository<User?> userRepo;
         private const string? HelloWorldPayload = "Hello, World!";
-
 
         // GET: api/<UserController>
         public UserController(IRepository<User?> userRepo)
@@ -56,8 +53,7 @@ namespace MainApi.Controllers
             return userRepo.GetById(id);
         }
 
-
-        [HttpGet( nameof(hello))]
+        [HttpGet(nameof(hello))]
         public string? hello()
         {
             return "Hello World!";

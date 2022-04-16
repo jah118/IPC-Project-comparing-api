@@ -22,15 +22,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApiContext>(options =>
 {
-    //options.UseSqlServer("Server=JonasXPS\\SQLEXPRESS; Initial Catalog=EFCore; Integrated Security=True");
-    //options.UseSqlServer("Server=10.10.1.62,1433; Database=EFCore; User Id=sa;Password=12341234;MultipleActiveResultSets=true");
-    //options.UseSqlServer("Server=127.0.0.1,1443; Initial Catalog=EFCore; User Id=SA;Password=VerySecretPass1234; Integrated Security=False; MultipleActiveResultSets=True;");
     options.UseSqlServer("Server=mainpidb; Initial Catalog=EFCore; User Id=SA;Password=VerySecretPass1234; Integrated Security=False;");
-
-    //options.UseSqlServer("Data Source=127.0.0.1,1443; Initial Catalog=EFCore; User Id=Sa;Password=Passw0rd2019; Integrated Security=False;");
 });
-
-//var service = ServiceLocator.ServiceProvider.GetService<MyServiceBase>();
 
 builder.Services.AddTransient<IRepository<User>, UserRepo>();
 

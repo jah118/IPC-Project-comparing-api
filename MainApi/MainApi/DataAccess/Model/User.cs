@@ -14,6 +14,5 @@
 
         public Gender Gender { get; set; }
         public string Framework { get; set; }
-
     }
 }
