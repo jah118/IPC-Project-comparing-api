@@ -12,7 +12,6 @@ configurationBuilder.SetBasePath(Directory.GetCurrentDirectory())
     .Build();
 var configuration = configurationBuilder.Build();
 
-
 // Add services to the container.
 
 builder.Services.AddControllers();
