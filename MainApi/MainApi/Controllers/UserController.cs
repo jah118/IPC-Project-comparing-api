@@ -10,17 +10,17 @@ namespace MainApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IRepository<User?> userRepo;
+        private readonly IRepository<User?> _userRepo;
         private const string? HelloWorldPayload = "Hello, World!";
 
         // GET: api/<UserController>
         public UserController(IRepository<User?> userRepo)
         {
-            this.userRepo = userRepo;
+            this._userRepo = userRepo;
         }
 
-        [HttpGet(nameof(users))]
-        public IEnumerable<User> users()
+        [HttpGet(nameof(Users))]
+        public IEnumerable<User> Users()
         {
             var list = new List<User>(1000);
             for (int index = 1; index < 1001; index++)
@@ -40,27 +40,27 @@ namespace MainApi.Controllers
             return list;
         }
 
-        [HttpGet(nameof(getEfCore))]
-        public async Task<IEnumerable<User>> getEfCore()
+        [HttpGet(nameof(GetEfCore))]
+        public async Task<IEnumerable<User>> GetEfCore()
         {
-            return await userRepo.GetAll();
+            return await _userRepo.GetAll();
         }
 
         // GET api/<UserController>/5
-        [HttpGet(nameof(getEfCoreById))]
-        public User? getEfCoreById(int id)
+        [HttpGet(nameof(GetEfCoreById))]
+        public User? GetEfCoreById(int id)
         {
-            return userRepo.GetById(id);
+            return _userRepo.GetById(id);
         }
 
-        [HttpGet(nameof(hello))]
-        public string? hello()
+        [HttpGet(nameof(Hello))]
+        public string? Hello()
         {
             return "Hello World!";
         }
 
-        [HttpGet(nameof(plain))]
-        public IResult plain()
+        [HttpGet(nameof(Plain))]
+        public IResult Plain()
         {
             Results.StatusCode(200);
             Results.Content("text/plain");
