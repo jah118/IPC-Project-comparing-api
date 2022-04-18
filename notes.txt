@@ -35,3 +35,6 @@ dotnet dev-certs https --trust
 
 
 
+jmeter -n -t MainWeb_5_min.jmx -l output/maintestresults.jtl
+
+C:\temp\apache-jmeter-5.4.3\bin> 

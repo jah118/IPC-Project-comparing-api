@@ -69,7 +69,6 @@ app.MapGet("/users", () =>
 
 app.MapGet("/getEfCore", async (IRepository<User> userRepo) => await userRepo.GetAll()).WithName("UserEfCore");
 app.MapGet("/getEfCoreById", (int id, IRepository<User> userRepo) => userRepo.GetById(id));
-app.MapGet("/hello", () => "Hello World!");
 app.MapGet("/plain", () =>
     {
         Results.StatusCode(200);
