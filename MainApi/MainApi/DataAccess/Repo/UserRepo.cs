@@ -1,7 +1,8 @@
-﻿using MainApi.DataAccess;
-using MainApi.DataAccess.Model;
+﻿using MainApi.DataAccess.Model;
 using MainApi.DataAccess.Repo.Interface;
 using Microsoft.EntityFrameworkCore;
+
+namespace MainApi.DataAccess.Repo;
 
 public class UserRepo : IRepository<User>
 {
