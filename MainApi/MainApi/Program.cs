@@ -3,6 +3,7 @@ using MainApi.DataAccess.Model;
 using MainApi.DataAccess.Repo.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using MainApi.DataAccess.Repo;
 
 var builder = WebApplication.CreateBuilder(args);
 
