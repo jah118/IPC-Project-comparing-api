@@ -37,7 +37,7 @@ public class UserRepo : IRepository<User>
 
     public void Delete(int id)
     {
-        var userToDelete = _context.Users.Find(id);
+        var userToDelete = _context.Users!.Find(id);
         if (userToDelete is not null)
         {
             _context.Users.Remove(userToDelete);
