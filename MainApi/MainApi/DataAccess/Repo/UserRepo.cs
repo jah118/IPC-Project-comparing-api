@@ -5,22 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 public class UserRepo : IRepository<User>
 {
-    private readonly ApiContext context;
+    private readonly ApiContext _context;
 
     public UserRepo(ApiContext context)
     {
-        this.context = context;
+        this._context = context;
     }
 
     public Task<List<User>> GetAll()
     {
-        var user = this.context.Users.ToListAsync();
+        var user = _context.Users!.ToListAsync();
         return user;
     }
 
     public User? GetById(int id)
     {
-        var user = this.context.Users.AsNoTracking().SingleOrDefault(p => p.Id == id);
+        var user = _context.Users!.AsNoTracking().SingleOrDefault(p => p.Id == id);
         return user;
     }
 
@@ -36,11 +36,11 @@ public class UserRepo : IRepository<User>
 
     public void Delete(int id)
     {
-        var userToDelete = this.context.Users.Find(id);
+        var userToDelete = _context.Users.Find(id);
         if (userToDelete is not null)
         {
-            this.context.Users.Remove(userToDelete);
-            this.context.SaveChanges();
+            _context.Users.Remove(userToDelete);
+            _context.SaveChanges();
         }
     }
 }
